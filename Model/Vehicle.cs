@@ -11,12 +11,7 @@ class Vehicle
     protected bool motorized;
 
     /// <summary>
-    /// The name of the company that produced the vehicle.
+    /// The amount of wheels for this vehicle.
     /// </summary>
-    protected string brand;
-
-    /// <summary>
-    /// The name of the production model.
-    /// </summary>
-    protected string model;    
+    protected int numberOfWheels; 
 }
