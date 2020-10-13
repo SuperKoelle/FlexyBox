@@ -1,19 +1,22 @@
 class Vehicle
 {
-/*     public Vehicle(int MaxSpeed, bool Motorized, string Brand, string Model)
-    {
-        this.maxSpeed = MaxSpeed;
-        this.motorized = Motorized;
-        this.brand = Brand;
-        this.model = Model;
-    } */
-
-    
+    /// <summary>
+    /// MaxSpeed set in Km/h.
+    /// </summary>
     protected int maxSpeed;
 
+    /// <summary>
+    /// Set to true if the vehicle is self-propelled.
+    /// </summary>
     protected bool motorized;
 
+    /// <summary>
+    /// The name of the company that produced the vehicle.
+    /// </summary>
     protected string brand;
 
+    /// <summary>
+    /// The name of the production model.
+    /// </summary>
     protected string model;    
 }
