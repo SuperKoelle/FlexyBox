@@ -1,4 +1,6 @@
-class Vehicle
+namespace FlexyBox
+{
+    class Vehicle
 {
     /// <summary>
     /// MaxSpeed set in Km/h.
@@ -14,4 +16,5 @@ class Vehicle
     /// The amount of wheels for this vehicle.
     /// </summary>
     protected int numberOfWheels; 
+}
 }

@@ -1,3 +1,5 @@
+namespace FlexyBox
+{
 class BumperCar : Vehicle
 {
     /// <summary>
@@ -9,4 +11,5 @@ class BumperCar : Vehicle
         this.motorized = true;
         this.numberOfWheels = 3;
     }
+}
 }

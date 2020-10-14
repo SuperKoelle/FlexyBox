@@ -1,3 +1,5 @@
+namespace FlexyBox
+{
 class Car : Vehicle
 {
     /// <summary>
@@ -9,4 +11,5 @@ class Car : Vehicle
         this.motorized = true;
         this.numberOfWheels = 4;
     }
+}
 }
