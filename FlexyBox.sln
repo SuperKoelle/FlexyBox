@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexyBox", "src\FlexyBox.csproj", "{8F25C255-3580-4385-B9F3-94F5C0DE24DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexyBox", "Src\FlexyBox.csproj", "{8F25C255-3580-4385-B9F3-94F5C0DE24DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +32,17 @@ Global
 		{8F25C255-3580-4385-B9F3-94F5C0DE24DB}.Release|x64.Build.0 = Release|x64
 		{8F25C255-3580-4385-B9F3-94F5C0DE24DB}.Release|x86.ActiveCfg = Release|x86
 		{8F25C255-3580-4385-B9F3-94F5C0DE24DB}.Release|x86.Build.0 = Release|x86
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Debug|x64.ActiveCfg = Debug|x64
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Debug|x64.Build.0 = Debug|x64
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Debug|x86.ActiveCfg = Debug|x86
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Debug|x86.Build.0 = Debug|x86
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Release|x64.ActiveCfg = Release|x64
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Release|x64.Build.0 = Release|x64
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Release|x86.ActiveCfg = Release|x86
+		{3BD0CDD6-5C26-4A90-A4AA-F2768FF48076}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal

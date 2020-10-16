@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/netcoreapp2.0/FlexyBox.dll",
+            "program": "${workspaceFolder}/Src//bin/Debug/netcoreapp2.0/FlexyBox.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
