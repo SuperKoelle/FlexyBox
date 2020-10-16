@@ -1,6 +1,6 @@
 namespace FlexyBox
 {
-    class BumperCar : Vehicle
+    public class BumperCar : Vehicle
     {
         /// <summary>
         /// Create an instance of a bumpercar. MaxSpeed is 100 km/h for bumpercars and they are motorized.

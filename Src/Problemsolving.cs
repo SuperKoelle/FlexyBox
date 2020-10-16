@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace FlexyBox
 {
-    class Problemsolving
+    public class Problemsolving
     {
         /// <summary>
         /// Reverse a string without using String.Reverse()

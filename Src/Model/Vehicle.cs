@@ -1,6 +1,6 @@
 namespace FlexyBox
 {
-    class Vehicle
+    public class Vehicle
     {
         /// <summary>
         /// MaxSpeed set in Km/h.

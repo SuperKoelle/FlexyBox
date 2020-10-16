@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FlexyBox
 {
-    class FileWriter
+    public class FileWriter
     {
         /// <summary>
         /// Writes the name of the types to the file.

@@ -1,6 +1,6 @@
 namespace FlexyBox
 {
-    class Car : Vehicle
+    public class Car : Vehicle
     {
         /// <summary>
         /// Create an instance of a car. MaxSpeed is 150 km/h for cars and they are motorized.

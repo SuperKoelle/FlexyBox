@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace FlexyBox
 {
-    class InstanceService
+    public class InstanceService
     {
         /// <summary>
         /// Returns a collection of instances of all classes of type T
