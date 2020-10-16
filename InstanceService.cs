@@ -4,53 +4,62 @@ using System.Linq;
 
 namespace FlexyBox
 {
-class InstanceService
-{
-    // Returns a list of instances of all classes of type T
-
-    // Lav en InstanceService med metoden IEnumerable<T> GetInstances() 
-    // som returnerer en instans  af alle klasser af typen T. 
-
-    // Vehicle, så vil jeg gerne have alle
-    // Car, BumperCar eller Bicycle, så vil jeg blot have den.
-
-    // bt = object && type = T - bingo
-    // bt = T && type = ? - bingo
-    // bt
-
-    public IEnumerable<T> GetInstances<T>()
+    class InstanceService
     {
-/*         var f = typeof(T);
-        System.Console.WriteLine("IN BaseType:" + f.BaseType);
-        System.Console.WriteLine("IN Type:" + f.Name);
-        System.Console.WriteLine(""); */
-
-        var allInstances = new List<T>();
-
-        foreach(var assem in AppDomain.CurrentDomain.GetAssemblies())
+        /// <summary>
+        /// Returns a collection of instances of all classes of type T
+        /// </summary>
+        /// <typeparam name="T">The type of instances in the returned collection</typeparam>
+        /// <returns>Collection of instances</returns>
+        public IEnumerable<T> GetInstances<T>()
         {
-            var subTypes = assem.GetTypes().Where(x => x.BaseType == typeof(T) || x == typeof(T));
+            var allInstances = new List<T>();
+            var assembly = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.StartsWith("FlexyBox")).FirstOrDefault();          
 
-            foreach (var subType in subTypes)
+            if (assembly != null)
             {
-                allInstances.Add((T)Activator.CreateInstance(subType));
+                var subTypes = assembly.GetTypes().Where(x => x.BaseType == typeof(T) || x == typeof(T));
+
+                foreach (var subType in subTypes)
+                {
+                    allInstances.Add((T)Activator.CreateInstance(subType));
+                }
+
+                return allInstances;
+            }
+            else
+            {
+                throw new Exception("The assemblyname was not found.");
             }
         }
-        
-        return allInstances;
-    }
+    
+        /// <summary>
+        /// Get a collection of types containing the partial name in the type name. The search is based on lowercase comparisson.
+        /// </summary>
+        /// <param name="partialName">Partial name to search for</param>
+        /// <returns>Collection of types</returns>
+        public IEnumerable<Type> SearchTypes(string partialName)
+        {
+            var assembly = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.StartsWith("FlexyBox")).FirstOrDefault();
 
-/* 
-    public T[] Reverse<T>(T[] array)
-{
-    var result = new T[array.Length];
-    int j=0;
-    for(int i=array.Length - 1; i>= 0; i--)
-    {
-        result[j] = array[i];
-        j++;
+            if (assembly != null)
+            {                
+               var result = new List<Type>();
+
+                foreach (var type in assembly.GetTypes())
+                {
+                    if (type.Name.ToLower().Contains(partialName.ToLower()))
+                    {
+                        result.Add(type);
+                    }
+                } 
+
+                return result;
+            }
+            else
+            {
+                throw new Exception("The assemblyname was not found.");
+            }
+        }
     }
-    return result; 
-} */
-}
 }
