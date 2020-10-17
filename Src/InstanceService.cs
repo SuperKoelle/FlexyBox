@@ -32,34 +32,26 @@ namespace FlexyBox
                 throw new Exception("The assemblyname was not found.");
             }
         }
-    
+
         /// <summary>
         /// Get a collection of types containing the partial name in the type name. The search is based on lowercase comparisson.
         /// </summary>
         /// <param name="partialName">Partial name to search for</param>
-        /// <returns>Collection of types</returns>
-        public IEnumerable<Type> SearchTypes(string partialName)
+        /// <typeparam name="T">The type of instances in the returned collection</typeparam>
+        /// <returns>Collection of instances<</returns>
+        public IEnumerable<T> SearchTypes<T>(string partialName)
         {
-            var assembly = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.StartsWith("FlexyBox")).FirstOrDefault();
+            var result = new List<T>();
 
-            if (assembly != null)
-            {                
-               var result = new List<Type>();
-
-                foreach (var type in assembly.GetTypes())
-                {
-                    if (type.Name.ToLower().Contains(partialName.ToLower()))
-                    {
-                        result.Add(type);
-                    }
-                } 
-
-                return result;
-            }
-            else
+            foreach (var type in GetInstances<T>())
             {
-                throw new Exception("The assemblyname was not found.");
+                if (type.GetType().Name.ToLower().Contains(partialName.ToLower()))
+                {
+                    result.Add(type);
+                }
             }
+
+            return result;
         }
     }
 }

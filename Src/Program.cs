@@ -1,21 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace FlexyBox
 {
-    class Program
+    public class Program
     {
+        #region Kommentarer til FlexyBox
+        // Disse kommentarer er her blot for at uddybe overvejelser jeg har haft under udvikling. Disse ville ikke være noteret på samme
+        // måde, hvis dette var et produkt til en kunde.
+        //
+        // GUI kunne laves pænere, men dette virkede ikke til at være i fokus i denne løsning. Løsningen kan afvikles, ved at udkommentere metode
+        // kald i Main metoden.
+        // Tests kan afvikles med "dotnet test Tests/Tests.csproj" i Visual Studio Code.
+        #endregion
+
         static void Main(string[] args)
         {
             Console.WriteLine("\nFlexyBox Vehicle System\n-----------------------");
             
-            //ListTypes();
-            //SearchTypes();
-            //ListTypesToFile("types.txt");
-            //ReverseString("FlexyBox samler hele din drift i et system, og frigiver tid til dine kunder.");
-            //IsPalidrome("ene");
-            //MissingElements(new int[] { 1,3,4 });
+            Console.WriteLine("Task 3: Functionality");
+            ListTypes();
+            
+            Console.WriteLine();
+            SearchTypes("car");
+            
+            Console.WriteLine();
+            ListTypesToFile("types.txt");
+
+            Console.WriteLine("\nTask 4: Problem");
+            ReverseString("FlexyBox samler hele din drift i et system, og frigiver tid til dine kunder.");
+            
+            Console.WriteLine();
+            IsPalidrome("beeb");
+            
+            Console.WriteLine();
+            MissingElements(new int[] { 1,3,4 });
         }
 
         /// <summary>
@@ -25,14 +46,22 @@ namespace FlexyBox
         {
             Console.WriteLine("Types in the system:");
 
-            var instanceService = new InstanceService();
-            var vehicles = (List<Vehicle>) instanceService.GetInstances<Vehicle>();
-            var alfabeticVehicles = vehicles.OrderBy(x => x.GetType().Name).ToList();
-
-            foreach (var instance in alfabeticVehicles)
+            foreach (var instance in GetAndSortTypes<Vehicle>())
             {
                 Console.WriteLine("\t"+ instance.GetType().Name);
             }
+        }
+
+        /// <summary>
+        /// Testable method to make sure that types are returned ordered
+        /// </summary>
+        /// <typeparam name="T">The type of instances in the returned collection</typeparam>
+        /// <returns>Ordered collection of instances</returns>
+        public static IEnumerable<T> GetAndSortTypes<T>()
+        {
+            var instanceService = new InstanceService();
+            var types = instanceService.GetInstances<T>();
+            return types.OrderBy(x => x.GetType().Name).ToList();
         }
 
         /// <summary>
@@ -41,17 +70,23 @@ namespace FlexyBox
         /// <param name="partialName">Partial name to search for</param>
         private static void SearchTypes(string partialName)
         {
-            Console.WriteLine("Searching for types where '"+ partialName +"' is part of the name.");
-
-            var instanceService = new InstanceService();
-            var types = instanceService.SearchTypes(partialName);
-
             Console.WriteLine("Types in the assembly containing the partial name (" + partialName + "):");
 
-            foreach (var type in types)
+            foreach (var instance in GetSearchedTypes<Vehicle>(partialName))
             {
-                Console.WriteLine("\t"+ type.Name);
+                Console.WriteLine("\t"+ instance.GetType().Name);
             }
+        }
+
+        /// <summary>
+        /// Testable method for searching for types
+        /// </summary>
+        /// <param name="partialName">Partial name to search for</param>
+        /// <returns>Collection of instances</returns>
+        public static IEnumerable<T> GetSearchedTypes<T>(string partialName)
+        {
+            var instanceService = new InstanceService();
+            return instanceService.SearchTypes<T>(partialName);
         }
 
         /// <summary>
