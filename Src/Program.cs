@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace FlexyBox
@@ -13,14 +12,23 @@ namespace FlexyBox
         //
         // GUI kunne laves pænere, men dette virkede ikke til at være i fokus i denne løsning. Løsningen kan afvikles, ved at udkommentere metode
         // kald i Main metoden.
-        // Tests kan afvikles med "dotnet test Tests/Tests.csproj" i Visual Studio Code.
+        //
+        // Exceptionhandling kunne være foretaget pænere, samt programmet kunne logge bedre, måske endda til en centralt sted. Dette vurderes dog, 
+        // at være uden for scope af denne opgave.
+        // 
+        // Projektet kan startes med "dotnet run -p Src/FlexyBox.csproj" i Visual Studio Code.
         #endregion
 
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nFlexyBox Vehicle System\n-----------------------");
-            
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.WriteLine();
             Console.WriteLine("Task 3: Functionality");
+
+            Console.WriteLine();
             ListTypes();
             
             Console.WriteLine();
@@ -29,7 +37,10 @@ namespace FlexyBox
             Console.WriteLine();
             ListTypesToFile("types.txt");
 
+            Console.WriteLine();
             Console.WriteLine("\nTask 4: Problem");
+
+            Console.WriteLine();
             ReverseString("FlexyBox samler hele din drift i et system, og frigiver tid til dine kunder.");
             
             Console.WriteLine();
@@ -44,12 +55,16 @@ namespace FlexyBox
         /// </summary>
         private static void ListTypes()
         {
-            Console.WriteLine("Types in the system:");
+            WriteSeperator();
+
+            Console.WriteLine("- Writing all types in the system alphabetically ordered: ");
 
             foreach (var instance in GetAndSortTypes<Vehicle>())
             {
-                Console.WriteLine("\t"+ instance.GetType().Name);
+                Console.WriteLine("- \t"+ instance.GetType().Name);
             }
+
+            WriteSeperator();
         }
 
         /// <summary>
@@ -70,12 +85,16 @@ namespace FlexyBox
         /// <param name="partialName">Partial name to search for</param>
         private static void SearchTypes(string partialName)
         {
-            Console.WriteLine("Types in the assembly containing the partial name (" + partialName + "):");
+            WriteSeperator();
+
+            Console.WriteLine("- Types in the assembly containing the partial name (" + partialName + "):");
 
             foreach (var instance in GetSearchedTypes<Vehicle>(partialName))
             {
-                Console.WriteLine("\t"+ instance.GetType().Name);
+                Console.WriteLine("- \t"+ instance.GetType().Name);
             }
+
+            WriteSeperator();
         }
 
         /// <summary>
@@ -95,14 +114,29 @@ namespace FlexyBox
         /// <param name="fullPath">The full path including filename ie. "C:/documents/file.txt"</param>
         private static void ListTypesToFile(string fullPath)
         {
-            Console.WriteLine("The types in the assembly will be written to the file: " + fullPath);
+            WriteSeperator();
+
+            Console.WriteLine("- Writting the types in the assembly to the file: " + fullPath);
 
             var instanceService = new InstanceService();
             var vehicles = (List<Vehicle>) instanceService.GetInstances<Vehicle>();
-  
-            FileWriter.WriteTypesToFile(fullPath, vehicles);
 
-            Console.WriteLine("The file has been written.");
+            try
+            {
+                FileWriter.WriteTypesToFile(fullPath, vehicles);
+                Console.WriteLine("-\tThe file has been written.");
+            }
+            catch (Exception ex)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine();
+                Console.WriteLine("-\tAn error has occurred. Please use following message for troubleshooting:");
+                Console.WriteLine("-\t\t'"+ ex.Message +"'");
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.WriteLine();
+            }
+
+            WriteSeperator();
         }
 
         /// <summary>
@@ -111,9 +145,15 @@ namespace FlexyBox
         /// <param name="stringToReverse">The string to be reversed</param>
         private static void ReverseString(string stringToReverse)
         {
-            Console.WriteLine("String to be reversed: " + stringToReverse);
+            WriteSeperator();
+
+            Console.WriteLine("Reversing a string:");
+
+            Console.WriteLine("\tString to be reversed: " + stringToReverse);
             var reversedString = Problemsolving.ReverseString(stringToReverse);
-            Console.WriteLine("String is reversed: " + reversedString);
+            Console.WriteLine("\tString is reversed to: " + reversedString);
+
+            WriteSeperator();
         }
         
         /// <summary>
@@ -122,14 +162,15 @@ namespace FlexyBox
         /// <param name="stringToTest">The string to test</param>
         private static void IsPalidrome(string stringToTest)
         {
-            if (Problemsolving.IsPalindrome(stringToTest))
-            {
-                System.Console.WriteLine(stringToTest + " is a palindrome.");
-            }
-            else
-            {
-                System.Console.WriteLine(stringToTest + " is not a palidnrome.");
-            }
+            WriteSeperator();
+
+            Console.WriteLine("- Testing to see if ("+ stringToTest +") is a palindrome:");
+
+            var result = Problemsolving.IsPalindrome(stringToTest) ? "-\tIt is" : "-\tIt isn't";
+            
+            Console.WriteLine(result);
+
+            WriteSeperator();
         }
 
         /// <summary>
@@ -138,8 +179,10 @@ namespace FlexyBox
         /// <param name="arr">Array representing integers</param>
         private static void MissingElements(int[] arr)
         {
-            Console.WriteLine("Missing elements");
-            Console.Write("Input: [");
+            WriteSeperator();
+
+            Console.WriteLine("- Finding missing numbers in the series:");
+            Console.Write("-\tNumber series:   [");
 
             for (int i = 0; i < arr.Length; i++)
             {
@@ -155,7 +198,7 @@ namespace FlexyBox
 
             var arr2 = (int[]) Problemsolving.MissingElements(arr);
 
-            Console.Write("Output: [");
+            Console.Write("-\tMissing numbers: [");
 
             for (int i = 0; i < arr2.Length; i++)
             {
@@ -168,6 +211,16 @@ namespace FlexyBox
                     Console.WriteLine(arr2[i] + "]");
                 }
             }
+
+            WriteSeperator();
+        }
+    
+        /// <summary>
+        /// Writing seperator to console.
+        /// </summary>
+        private static void WriteSeperator()
+        {
+            Console.WriteLine("------------------------------------------------------------");
         }
     }
 }

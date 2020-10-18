@@ -1,4 +1,0 @@
-Bicycle
-BumperCar
-Car
-Vehicle

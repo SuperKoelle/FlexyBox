@@ -23,6 +23,14 @@ namespace Tests
         // Testene faker/mocker ikke Microsoft komponenter (Console og StreamWriter). Disse forventes at virke. For at holde arkitekturen simple i denne 
         // løsning testes på resultatet af StreamWriter. Alternativt kunne metoderne i FileWriter klassen deles op, for at lave specifikke tests at det,
         // der kommer ind og det, der sende til StreamWriteren.
+        //
+        // Der testes ikke for ikke at bruge String.Reverse(), der testes ej heller for om reflexion rent faktisk understøtter andre typer. Begge dele 
+        // virker lidt overflødige at teste for. Her kunne man dog høre opgavestiller/kunden om det var krav, der var vigtige nok til at blive testet for.
+        //
+        // Exceptions fra eksempelvis IO håndteres ikke. Der er heller ikke test for om disse kastes rigtigt. Dette vurderes ikke til at være ønsket for
+        // denne løsning.
+        //
+        // Tests kan afvikles med "dotnet test Tests/Tests.csproj" i Visual Studio Code.
         #endregion
 
         private readonly InstanceService instanceService;
@@ -108,11 +116,11 @@ namespace Tests
         [Fact]
         public void Functionaly_2()
         {
-            var p = (List<Type>) Program.GetSearchedTypes("car");
+            var p = (List<Vehicle>) Program.GetSearchedTypes<Vehicle>("car");
 
             foreach (var instance in p)
             {
-                Assert.Equal(true, instance.Name.ToLower().Contains("car".ToLower()));                
+                Assert.Equal(true, instance.GetType().Name.ToLower().Contains("car".ToLower()));                
             }
 
             Assert.Equal(2, p.Count);
@@ -121,11 +129,11 @@ namespace Tests
         [Fact]
         public void Functionaly_3()
         {
-            var p = (List<Type>) Program.GetSearchedTypes("Car");
+            var p = (List<Vehicle>) Program.GetSearchedTypes<Vehicle>("Car");
 
             foreach (var instance in p)
             {
-                Assert.Equal(true, instance.Name.ToLower().Contains("Car".ToLower()));            
+                Assert.Equal(true, instance.GetType().Name.ToLower().Contains("Car".ToLower()));            
             }
 
             Assert.Equal(2, p.Count);
@@ -134,11 +142,11 @@ namespace Tests
         [Fact]
         public void Functionaly_4()
         {
-            var p = (List<Type>) Program.GetSearchedTypes("bi");
+            var p = (List<Vehicle>) Program.GetSearchedTypes<Vehicle>("bi");
 
             foreach (var instance in p)
             {
-                Assert.Equal(true, instance.Name.ToLower().Contains("bi".ToLower()));            
+                Assert.Equal(true, instance.GetType().Name.ToLower().Contains("bi".ToLower()));            
             }
 
             Assert.Equal(1, p.Count);
@@ -147,7 +155,7 @@ namespace Tests
         [Fact]
         public void Functionaly_5()
         {
-            var p = (List<Type>) Program.GetSearchedTypes("zx");
+            var p = (List<Vehicle>) Program.GetSearchedTypes<Vehicle>("zx");
 
             Assert.Equal(0, p.Count);
         }    
@@ -161,6 +169,8 @@ namespace Tests
             
             Assert.Equal(true, File.Exists("FileWriterTest"));
             Assert.Equal(true, File.ReadAllLines("FileWriterTest").First().GetType() == "line1".GetType());
+
+            File.Delete("FileWriterTest");
         }    
         #endregion
 
@@ -199,7 +209,7 @@ namespace Tests
             Assert.Equal(new int[] {}, arr2);
         }  
 
-                [Fact]
+        [Fact]
         public void Problemsolving_6()
         {
             var arr2 = (int[]) Problemsolving.MissingElements(new int[] {1,3,4});
